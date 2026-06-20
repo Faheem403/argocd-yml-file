@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-deployment
+  labels:
+    app: sniffer
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: sniffer
+  template:
+    metadata:
+      labels:
+        app: sniffer
+    spec:
+      containers:
+      - name: cont1
+        image: hacker123shiva/springbt-in-docker:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: snifferappsvc
+spec:
+  type: LoadBalancer
+  selector:
+    app: sniffer
+  ports:
+    - port: 80
+      targetPort: 8080
